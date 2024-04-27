@@ -49,17 +49,9 @@ function getURLForNode (node: SyntaxNode, state: EditorState): string|undefined 
   }
 }
 
-/**
- * Function Description
- * 
- * @param {Type}  name  Comment on the parameter
- * 
- * @return {Type}       Comment on the return value
- */
-function removeMarkdownLink (name: Type): Type|undefined {
-  // Implement code to remove mark down link here
-  // Look at function insertLinkOrImage in ../commands/markdown.ts line 21 for example of how link is inserted
-  // Base function around this to remove a link
+function removeMarkdownLink (markdownText: string): string {
+  const markdownLinkRegex = /\[([^\]]+)\]\([^)]+\)/g
+  return markdownText.replace(markdownLinkRegex, '$1')
 }
 
 /**
@@ -77,6 +69,8 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     console.error('Could not show Link/Image context menu: No URL found!')
     return
   }
+
+  const linkText = removeMarkdownLink(url)
 
   const linkTpl: AnyMenuItem[] = [
     {
@@ -147,7 +141,13 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     } else if (clickedID === 'open-img-in-browser') {
       window.location.href = validAbsoluteURI
     } else if (clickedID === 'menu.remove_link') {
-      removeMarkdownLink()
+      view.dispatch({
+        changes: {
+          from: node.from,
+          to: node.to,
+          insert: linkText
+        }
+      })
     }
   })
 }
