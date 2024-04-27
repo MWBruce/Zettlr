@@ -50,7 +50,7 @@ function getURLForNode (node: SyntaxNode, state: EditorState): string|undefined 
 }
 
 function removeMarkdownLink (markdownText: string): string {
-  const markdownLinkRegex = /\[[^\]]+\]\(([^)]+)\)/g
+  const markdownLinkRegex = /\[([^\]]+)\]\([^)]+\)/g
   return markdownText.replace(markdownLinkRegex, '$1')
 }
 
@@ -71,7 +71,7 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
   }
 
   const linkText = removeMarkdownLink(url)
-
+  console.log(linkText)
   const linkTpl: AnyMenuItem[] = [
     {
       id: 'none',
