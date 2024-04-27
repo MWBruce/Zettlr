@@ -49,19 +49,19 @@ function getURLForNode (node: SyntaxNode, state: EditorState): string|undefined 
   }
 }
 
-function getTextForNode (node: SyntaxNode, state: EditorState): string|undefined {
-  if (node.type.name === 'Text') {
-    return state.sliceDoc(node.from, node.to)
-  }
+// function getTextForNode (node: SyntaxNode, state: EditorState): string|undefined {
+//   if (node.type.name === 'Text') {
+//     return state.sliceDoc(node.from, node.to)
+//   }
 
-  const child = node.getChild('Text')
+//   const child = node.getChild('Text')
 
-  if (child === null) {
-    return undefined
-  } else {
-    return state.sliceDoc(child.from, child.to)
-  }
-}
+//   if (child === null) {
+//     return undefined
+//   } else {
+//     return state.sliceDoc(child.from, child.to)
+//   }
+// }
 
 // Parses the regex string, I think this might be something that should be moved potentially into the markdown-editor/util directory potentially
 function removeMarkdownLink (markdownText: string): string {
@@ -85,8 +85,8 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     return
   }
   // Calls the remove markdown thing, although I note this is called on every right link context menu so this might not be needed until its clicked, also the node.from is the starting index in the document and node.to is the end index so when you do the slice doc it gets the full string
-  // const textToInsert = removeMarkdownLink(view.state.sliceDoc(node.from, node.to))
-  const textToInsert = getTextForNode(node, view.state)
+  const textToInsert = removeMarkdownLink(view.state.sliceDoc(node.from, node.to))
+  // const textToInsert = getTextForNode(node, view.state)
   const linkTpl: AnyMenuItem[] = [
     {
       id: 'none',
