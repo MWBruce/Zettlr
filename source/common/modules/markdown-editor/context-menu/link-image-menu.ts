@@ -49,6 +49,7 @@ function getURLForNode (node: SyntaxNode, state: EditorState): string|undefined 
   }
 }
 
+// Parses the regex string, I think this might be something that should be moved potentially into the markdown-editor/util directory potentially
 function removeMarkdownLink (markdownText: string): string {
   const markdownLinkRegex = /\[([^\]]+)\]\([^)]+\)/g
   return markdownText.replace(markdownLinkRegex, '$1')
@@ -69,9 +70,9 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     console.error('Could not show Link/Image context menu: No URL found!')
     return
   }
-
+  // Calls the remove markdown thing, although I note this is called on every right link context menu so this might not be needed until its clicked, also the node.from is the starting index in the document and node.to is the end index so when you do the slice doc it gets the full string
   const textToInsert = removeMarkdownLink(view.state.sliceDoc(node.from, node.to))
-  console.log(textToInsert)
+
   const linkTpl: AnyMenuItem[] = [
     {
       id: 'none',
@@ -141,6 +142,7 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     } else if (clickedID === 'open-img-in-browser') {
       window.location.href = validAbsoluteURI
     } else if (clickedID === 'menu.remove_link') {
+      // Idk if they want us to directly change this stuff here
       view.dispatch({
         changes: {
           from: node.from,
