@@ -70,7 +70,6 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     return
   }
 
-  // const linkText = removeMarkdownLink(url)
   const textToInsert = removeMarkdownLink(view.state.sliceDoc(node.from, node.to))
   console.log(textToInsert)
   const linkTpl: AnyMenuItem[] = [
