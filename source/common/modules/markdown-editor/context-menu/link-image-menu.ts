@@ -156,7 +156,7 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     } else if (clickedID === 'open-img-in-browser') {
       window.location.href = validAbsoluteURI
     } else if (clickedID === 'menu.remove_link') {
-      // Idk if they want us to directly change this stuff here
+      // Idk if they want us to directly change this stuff here so I think it might be a move basically everything I did into the utils directory, we could also go one step further and merge the open markdown links into the utils file as well so all the link utils are together
       view.dispatch({
         changes: {
           from: node.from,
