@@ -49,10 +49,10 @@ function getURLForNode (node: SyntaxNode, state: EditorState): string|undefined 
   }
 }
 
-function removeMarkdownLink (markdownText: string): string {
-  const markdownLinkRegex = /\[([^\]]+)\]\([^)]+\)/g
-  return markdownText.replace(markdownLinkRegex, '$1')
-}
+// function removeMarkdownLink (markdownText: string): string {
+//   const markdownLinkRegex = /\[([^\]]+)\]\([^)]+\)/g
+//   return markdownText.replace(markdownLinkRegex, '$1')
+// }
 
 /**
  * Shows a context menu appropriate for a link or image using the given node
@@ -70,7 +70,8 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     return
   }
 
-  const linkText = removeMarkdownLink(url)
+  // const linkText = removeMarkdownLink(url)
+  const linkText = node.getChildren(1)
   console.log(linkText)
   const linkTpl: AnyMenuItem[] = [
     {
