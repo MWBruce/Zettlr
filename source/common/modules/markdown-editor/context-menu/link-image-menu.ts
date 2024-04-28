@@ -63,7 +63,8 @@ function getURLForNode (node: SyntaxNode, state: EditorState): string|undefined 
 //   }
 // }
 
-// Parses the regex string, I think this might be something that should be moved potentially into the markdown-editor/util directory potentially
+// Parses the regex string, I think this might be something that should be moved potentially into the 
+// markdown-editor/util directory potentially
 function removeMarkdownLink (markdownText: string): string {
   const markdownLinkRegex = /\[([^\]]+)\]\([^)]+\)/g
   return markdownText.replace(markdownLinkRegex, '$1')
@@ -84,7 +85,9 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     console.error('Could not show Link/Image context menu: No URL found!')
     return
   }
-  // Calls the remove markdown thing, although I note this is called on every right link context menu so this might not be needed until its clicked, also the node.from is the starting index in the document and node.to is the end index so when you do the slice doc it gets the full string
+  // Calls the remove markdown thing, although I note this is called on every right link context menu so this might 
+  // not be needed until its clicked, also the node.from is the starting index in the document and node.to is the end 
+  // index so when you do the slice doc it gets the full string
   const textToInsert = removeMarkdownLink(view.state.sliceDoc(node.from, node.to))
   // const textToInsert = getTextForNode(node, view.state)
   const linkTpl: AnyMenuItem[] = [
@@ -156,7 +159,9 @@ export function linkImageMenu (view: EditorView, node: SyntaxNode, coords: { x: 
     } else if (clickedID === 'open-img-in-browser') {
       window.location.href = validAbsoluteURI
     } else if (clickedID === 'menu.remove_link') {
-      // Idk if they want us to directly change this stuff here so I think it might be a move basically everything I did into the utils directory, we could also go one step further and merge the open markdown links into the utils file as well so all the link utils are together
+      // Idk if they want us to directly change this stuff here so I think it might be a move basically everything 
+      // I did into the utils directory, we could also go one step further and merge the open markdown links into 
+      // the utils file as well so all the link utils are together
       view.dispatch({
         changes: {
           from: node.from,
